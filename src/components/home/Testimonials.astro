@@ -1,0 +1,137 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import Icon from "../ui/Icon.astro";
+import { testimonialsData } from "../../data/testimonials";
+---
+
+<section class="section testimonials-section">
+  <div class="container">
+    <SectionHeading
+      eyebrow="CLIENT EXPERIENCES"
+      title="Words from those we've <em>captured.</em>"
+      description="Trust is the foundation of intimate photography. Here is how our clients describe their sessions, weddings, and commercial collaborations."
+      align="center"
+    />
+
+    <div class="testimonials-grid" data-reveal-stagger>
+      {testimonialsData.map((t) => (
+        <article class="testimonial-card interactive-card">
+          <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
+            {Array.from({ length: t.rating }).map(() => (
+              <Icon name="star" size={16} class="star-icon" />
+            ))}
+          </div>
+
+          <blockquote class="testimonial-quote">
+            "{t.quote}"
+          </blockquote>
+
+          <div class="testimonial-author">
+            <img
+              src={t.avatar}
+              alt={t.client}
+              class="author-avatar"
+              loading="lazy"
+              width="48"
+              height="48"
+            />
+            <div class="author-info">
+              <cite class="author-name">{t.client}</cite>
+              <span class="author-role">{t.role}</span>
+              <span class="author-project">{t.projectType}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: var(--color-paper-light);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin-top: 3.5rem;
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 3.5vw, 2.75rem);
+    background: var(--color-paper);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .testimonial-stars {
+    display: flex;
+    gap: 0.25rem;
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .testimonial-quote {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    font-style: italic;
+    margin: 0 0 2rem;
+    flex-grow: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-gold);
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .author-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--color-text);
+  }
+
+  .author-role {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .author-project {
+    font-size: 0.72rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 800px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

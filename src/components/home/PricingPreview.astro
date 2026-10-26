@@ -1,0 +1,229 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import { portraitPackages } from "../../data/pricing";
+---
+
+<section class="section pricing-preview-section">
+  <div class="container">
+    <div class="pricing-header">
+      <SectionHeading
+        eyebrow="INVESTMENT & PACKAGES"
+        title="Transparent rates. <em>Uncompromising quality.</em>"
+        description="Whether you need an elevated executive presence or a full editorial branding shoot, our packages are structured with clear deliverables and no hidden fees."
+      />
+      <a class="section-link" href="/pricing/">
+        <span>View all packages & weddings</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="pricing-grid" data-reveal-stagger>
+      {portraitPackages.map((pkg) => (
+        <div
+          class:list={[
+            "pricing-card",
+            "interactive-card",
+            { "pricing-card--popular": pkg.popular },
+          ]}
+        >
+          {pkg.badge && (
+            <span class="pricing-badge">{pkg.badge}</span>
+          )}
+
+          <div class="pricing-top">
+            <h3 class="package-name">{pkg.name}</h3>
+            <p class="package-desc">{pkg.description}</p>
+            <div class="package-price">
+              <span class="currency">{pkg.currency}</span>
+              <span class="amount">{pkg.price}</span>
+            </div>
+            <span class="package-turnaround">
+              <Icon name="clock" size={14} /> Turnaround: {pkg.turnaround}
+            </span>
+          </div>
+
+          <ul class="package-features">
+            {pkg.features.map((feat) => (
+              <li>
+                <Icon name="check" size={16} class="check-icon" />
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="package-footer">
+            <Button
+              href={pkg.ctaHref}
+              variant={pkg.popular ? "gold" : "outline"}
+              class="pricing-btn"
+            >
+              {pkg.ctaText}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-preview-section {
+    background: var(--color-paper);
+  }
+
+  .pricing-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .section-link:hover {
+    color: var(--color-gold);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 2.5vw, 2.25rem);
+    align-items: stretch;
+  }
+
+  .pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 3vw, 2.5rem);
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .pricing-card--popular {
+    background: var(--color-ink);
+    color: var(--color-white);
+    border-color: var(--color-gold);
+    transform: scale(1.02);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: -0.75rem;
+    right: 1.5rem;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .package-name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .package-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem;
+    line-height: 1.5;
+  }
+
+  .pricing-card--popular .package-desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .package-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .package-price .currency {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-gold);
+  }
+
+  .package-price .amount {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .package-turnaround {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin-bottom: 1.75rem;
+  }
+
+  .package-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .package-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .check-icon {
+    color: var(--color-gold);
+    margin-top: 0.15rem;
+  }
+
+  .package-footer {
+    margin-top: auto;
+  }
+
+  :global(.pricing-btn) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (max-width: 980px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-card--popular {
+      transform: none;
+    }
+  }
+</style>

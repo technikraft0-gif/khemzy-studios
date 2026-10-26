@@ -1,0 +1,35 @@
+---
+import { siteConfig } from "../../data/site";
+
+const links = siteConfig.navLinks;
+---
+
+<div class="mobile-drawer" id="mobile-drawer" data-mobile-menu aria-hidden="true">
+  <div class="mobile-drawer-inner">
+    <nav class="mobile-drawer-links" aria-label="Mobile Drawer Navigation">
+      {links.map((link) => (
+        <a class="mobile-drawer-link" href={link.href}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="mobile-drawer-footer">
+      <a class="button button--gold button--full" href="/booking/">
+        <span>Book your session</span>
+        <span class="button-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <div class="mobile-contact-info">
+        <p>Lagos, Nigeria</p>
+        <a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mobile-drawer {
+    display: none;
+  }
+</style>

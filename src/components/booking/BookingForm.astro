@@ -1,0 +1,386 @@
+---
+import Icon from "../ui/Icon.astro";
+import { servicesData } from "../../data/services";
+import { siteConfig } from "../../data/site";
+
+interface Props {
+  defaultService?: string;
+  defaultPackage?: string;
+}
+
+const { defaultService = "", defaultPackage = "" } = Astro.props;
+---
+
+<div class="booking-form-wrapper" data-booking-container>
+  <form class="booking-form" id="booking-form" novalidate>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="fullName">Full Name <span class="req">*</span></label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          placeholder="e.g. Folake Adeniyi"
+          required
+          autocomplete="name"
+        />
+        <span class="field-error" data-error-for="fullName"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address <span class="req">*</span></label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="e.g. folake@example.com"
+          required
+          autocomplete="email"
+        />
+        <span class="field-error" data-error-for="email"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone / WhatsApp Number <span class="req">*</span></label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="+234 814 000 8899"
+          required
+          autocomplete="tel"
+        />
+        <span class="field-error" data-error-for="phone"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceType">Session / Commission Type <span class="req">*</span></label>
+        <select id="serviceType" name="serviceType" required>
+          <option value="">Select a discipline...</option>
+          {servicesData.map((s) => (
+            <option
+              value={s.title}
+              selected={defaultService.toLowerCase() === s.id.toLowerCase()}
+            >
+              {s.title} (from {s.startingPrice})
+            </option>
+          ))}
+          <option
+            value="Custom Bespoke Assignment"
+            selected={defaultPackage.length > 0}
+          >
+            Custom Package / Multiple Days
+          </option>
+        </select>
+        <span class="field-error" data-error-for="serviceType"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="preferredDate">Preferred Date / Range</label>
+        <input type="date" id="preferredDate" name="preferredDate" />
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location / City</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="e.g. Lagos (Studio or On-Site) or Destination"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="budgetRange">Estimated Budget</label>
+        <select id="budgetRange" name="budgetRange">
+          <option value="Standard">Select budget bracket...</option>
+          <option value="₦250k - ₦500k">₦250,000 – ₦500,000 (Studio / Branding)</option>
+          <option value="₦500k - ₦1.2M">₦500,000 – ₦1,200,000 (Editorial / Event)</option>
+          <option value="₦1.2M - ₦2.5M">₦1,200,000 – ₦2,500,000 (Full Wedding)</option>
+          <option value="₦2.5M+">₦2,500,000+ (Multi-Day Destination / VIP)</option>
+        </select>
+      </div>
+
+      <div class="form-group form-group--full">
+        <label for="details">Tell Us About Your Vision <span class="req">*</span></label>
+        <textarea
+          id="details"
+          name="details"
+          rows="4"
+          placeholder="Share your ideas, event schedule, aesthetic preferences, number of people, or specific requirements..."
+          required
+        ></textarea>
+        <span class="field-error" data-error-for="details"></span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="button button--gold button--large booking-submit-btn">
+        <span>Submit Booking Inquiry</span>
+        <span class="button-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <span class="or-separator">or</span>
+
+      <button
+        type="button"
+        id="whatsapp-direct-btn"
+        class="button button--outline button--large"
+      >
+        <Icon name="whatsapp" size={18} />
+        <span>Chat on WhatsApp Directly</span>
+      </button>
+    </div>
+  </form>
+
+  <div class="booking-success-message" id="booking-success" style="display: none;">
+    <div class="success-icon-wrap">
+      <Icon name="check" size={32} />
+    </div>
+    <h3>Inquiry Received with Pleasure</h3>
+    <p>
+      Thank you for considering Khemzy Studios. Our studio manager will review your dates
+      and respond within 24 hours via email and WhatsApp with a curated proposal.
+    </p>
+    <a
+      id="whatsapp-followup-link"
+      class="button button--gold"
+      href={siteConfig.whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>Instant WhatsApp Follow-up</span>
+      <span class="button-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  function setupBookingForm() {
+    const form = document.getElementById("booking-form") as HTMLFormElement | null;
+    const successBox = document.getElementById("booking-success");
+    const waBtn = document.getElementById("whatsapp-direct-btn");
+
+    if (!form || !successBox) return;
+
+    const clearErrors = () => {
+      document.querySelectorAll("[data-error-for]").forEach((el) => {
+        el.textContent = "";
+      });
+      form.querySelectorAll(".is-invalid").forEach((el) => {
+        el.classList.remove("is-invalid");
+      });
+    };
+
+    const validate = () => {
+      clearErrors();
+      let isValid = true;
+
+      const nameInput = form.fullName as HTMLInputElement;
+      if (!nameInput.value.trim() || nameInput.value.trim().length < 2) {
+        showError("fullName", "Please provide your full name.");
+        isValid = false;
+      }
+
+      const emailInput = form.email as HTMLInputElement;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+        showError("email", "Please provide a valid email address.");
+        isValid = false;
+      }
+
+      const phoneInput = form.phone as HTMLInputElement;
+      if (!phoneInput.value.trim() || phoneInput.value.trim().length < 7) {
+        showError("phone", "Please provide a valid phone or WhatsApp number.");
+        isValid = false;
+      }
+
+      const serviceSelect = form.serviceType as HTMLSelectElement;
+      if (!serviceSelect.value) {
+        showError("serviceType", "Please select a session type.");
+        isValid = false;
+      }
+
+      const detailsInput = form.details as HTMLTextAreaElement;
+      if (!detailsInput.value.trim() || detailsInput.value.trim().length < 8) {
+        showError("details", "Please tell us a little about your project (min. 8 characters).");
+        isValid = false;
+      }
+
+      return isValid;
+    };
+
+    function showError(fieldName: string, msg: string) {
+      const errorEl = document.querySelector(`[data-error-for="${fieldName}"]`);
+      if (errorEl) errorEl.textContent = msg;
+      const field = form?.elements.namedItem(fieldName) as HTMLElement | null;
+      if (field) field.classList.add("is-invalid");
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      const btn = form.querySelector(".booking-submit-btn") as HTMLButtonElement | null;
+      if (btn) {
+        btn.disabled = true;
+        btn.querySelector("span")!.textContent = "Sending Inquiry...";
+      }
+
+      setTimeout(() => {
+        form.style.display = "none";
+        successBox.style.display = "flex";
+      }, 700);
+    });
+
+    if (waBtn) {
+      waBtn.addEventListener("click", () => {
+        const name = (form.fullName as HTMLInputElement).value || "Client";
+        const service = (form.serviceType as HTMLSelectElement).value || "Photography Session";
+        const date = (form.preferredDate as HTMLInputElement).value || "Flexible";
+        const message = `Hello Khemzy Studios! My name is ${name}. I am inquiring about a ${service} for date: ${date}.`;
+        const encoded = encodeURIComponent(message);
+        window.open(`https://wa.me/2348140008899?text=${encoded}`, "_blank");
+      });
+    }
+  }
+
+  setupBookingForm();
+  document.addEventListener("astro:page-load", setupBookingForm);
+</script>
+
+<style>
+  .booking-form-wrapper {
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group--full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .req {
+    color: var(--color-terracotta);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.95rem 1.15rem;
+    font-size: 0.95rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(199, 167, 108, 0.2);
+  }
+
+  input.is-invalid,
+  select.is-invalid,
+  textarea.is-invalid {
+    border-color: var(--color-terracotta);
+    box-shadow: 0 0 0 2px rgba(183, 93, 67, 0.15);
+  }
+
+  .field-error {
+    font-size: 0.78rem;
+    color: var(--color-terracotta);
+    min-height: 1rem;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .or-separator {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  .booking-success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .success-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px rgba(199, 167, 108, 0.35);
+  }
+
+  .booking-success-message h3 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .booking-success-message p {
+    color: var(--color-text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin: 0 0 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .or-separator {
+      text-align: center;
+    }
+  }
+</style>

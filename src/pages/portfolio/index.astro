@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import PortfolioFilters from "../../components/portfolio/PortfolioFilters.astro";
+import PortfolioGrid from "../../components/portfolio/PortfolioGrid.astro";
+import BookingCTA from "../../components/home/BookingCTA.astro";
+import { portfolioProjects } from "../../data/portfolio";
+
+const initialCategory = Astro.url.searchParams.get("category") ?? "all";
+---
+
+<BaseLayout
+  title="Portfolio Archive | Khemzy Studios"
+  description="Explore our curated portfolio across weddings, executive portraits, editorial fashion, and commercial brand storytelling."
+>
+  <section class="portfolio-page-header section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="PORTFOLIO ARCHIVE"
+        title="Every frame holds <em>a lasting story.</em>"
+        description="A curated selection of our photographic commissions across Nigeria, Africa, and destination locations worldwide. Filter by category to discover your desired aesthetic."
+      />
+
+      <PortfolioFilters activeCategory={initialCategory} />
+
+      <PortfolioGrid projects={portfolioProjects} />
+    </div>
+  </section>
+
+  <BookingCTA
+    eyebrow="READY TO BE CAPTURED?"
+    title="Let's create your <em>next visual chapter.</em>"
+    description="Dates for wedding celebrations and seasonal studio sessions are limited. Inquire early to secure your reservation on our calendar."
+  />
+</BaseLayout>
+
+<style>
+  .portfolio-page-header {
+    padding-top: clamp(4.5rem, 9vw, 8rem);
+    background: var(--color-paper);
+  }
+</style>

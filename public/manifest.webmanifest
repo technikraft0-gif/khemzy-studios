@@ -1,0 +1,16 @@
+{
+  "name": "Khemzy Studios — Photography & Visual Storytelling",
+  "short_name": "Khemzy Studios",
+  "description": "Distinctive photography for people, celebrations, and ambitious brands based in Lagos, Nigeria.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101411",
+  "theme_color": "#101411",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import FeaturedWork from "../components/home/FeaturedWork.astro";
+import ServicesPreview from "../components/home/ServicesPreview.astro";
+import AboutPreview from "../components/home/AboutPreview.astro";
+import PricingPreview from "../components/home/PricingPreview.astro";
+import Testimonials from "../components/home/Testimonials.astro";
+import BookingCTA from "../components/home/BookingCTA.astro";
+import { siteConfig } from "../data/site";
+---
+
+<BaseLayout
+  title={`${siteConfig.name} — Distinctive Photography & Visual Storytelling`}
+  description={siteConfig.description}
+>
+  <Hero />
+  <FeaturedWork />
+  <ServicesPreview />
+  <AboutPreview />
+  <PricingPreview />
+  <Testimonials />
+  <BookingCTA />
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import { siteConfig } from "../../data/site";
+
+const links = siteConfig.navLinks;
+const pathname = Astro.url.pathname;
+
+const currentPage =
+  pathname === "/"
+    ? "home"
+    : pathname.startsWith("/portfolio")
+      ? "portfolio"
+      : pathname.startsWith("/services")
+        ? "services"
+        : pathname.startsWith("/about")
+          ? "about"
+          : pathname.startsWith("/pricing")
+            ? "pricing"
+            : pathname.startsWith("/contact")
+              ? "contact"
+              : pathname.replace(/^\/|\/$/g, "");
+---
+
+<header class="site-header" data-header>
+  <div class="header-inner container">
+    <a class="brand" href="/" aria-label="Khemzy Studios home">
+      <span class="brand-name">Khemzy<span class="brand-period">.</span></span>
+      <span class="brand-caption">STUDIOS</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Toggle navigation menu"
+      aria-controls="primary-navigation"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav
+      class="primary-navigation"
+      id="primary-navigation"
+      aria-label="Main navigation"
+      data-navigation
+    >
+      {links.map((link) => (
+        <a
+          class:list={[
+            "nav-link",
+            { "is-active": currentPage === link.key },
+          ]}
+          href={link.href}
+          aria-current={currentPage === link.key ? "page" : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <div class="header-actions">
+        <a
+          class="button button--gold header-booking"
+          href="/booking/"
+        >
+          <span>Book a session</span>
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,149 @@
+---
+import { portfolioCategories } from "../../data/portfolio";
+
+interface Props {
+  activeCategory?: string;
+}
+
+const { activeCategory = "all" } = Astro.props;
+const categories = ["All", ...portfolioCategories];
+---
+
+<div class="portfolio-filters" data-portfolio-filters>
+  <div class="filters-scroll">
+    {categories.map((cat) => {
+      const slug = cat.toLowerCase();
+      const isActive =
+        (slug === "all" && (!activeCategory || activeCategory === "all")) ||
+        slug === activeCategory.toLowerCase();
+
+      return (
+        <button
+          type="button"
+          class:list={["filter-btn", { "is-active": isActive }]}
+          data-category={slug}
+          aria-pressed={isActive ? "true" : "false"}
+        >
+          <span>{cat}</span>
+        </button>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  function setupPortfolioFilters() {
+    const filterButtons = document.querySelectorAll("[data-category]");
+    const projectCards = document.querySelectorAll("[data-project-category]");
+
+    if (!filterButtons.length || !projectCards.length) return;
+
+    const applyFilter = (category: string, updateUrl = true) => {
+      filterButtons.forEach((btn) => {
+        const btnCat = btn.getAttribute("data-category");
+        const isActive = btnCat === category;
+        btn.classList.toggle("is-active", isActive);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      projectCards.forEach((card) => {
+        const cardCat = card.getAttribute("data-project-category")?.toLowerCase();
+        const matches = category === "all" || cardCat === category;
+
+        const htmlCard = card as HTMLElement;
+        if (matches) {
+          htmlCard.style.display = "";
+          requestAnimationFrame(() => {
+            htmlCard.style.opacity = "1";
+            htmlCard.style.transform = "translate3d(0, 0, 0)";
+          });
+        } else {
+          htmlCard.style.opacity = "0";
+          htmlCard.style.transform = "translate3d(0, 15px, 0)";
+          setTimeout(() => {
+            if (btnCatMismatch(card, category)) {
+              htmlCard.style.display = "none";
+            }
+          }, 250);
+        }
+      });
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (category === "all") {
+          url.searchParams.delete("category");
+        } else {
+          url.searchParams.set("category", category);
+        }
+        window.history.replaceState({}, "", url.toString());
+      }
+    };
+
+    function btnCatMismatch(card: Element, activeCat: string) {
+      const cardCat = card.getAttribute("data-project-category")?.toLowerCase();
+      return activeCat !== "all" && cardCat !== activeCat;
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.getAttribute("data-category") || "all";
+        applyFilter(category);
+      });
+    });
+
+    // Read initial URL query param
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get("category");
+    if (initialCategory) {
+      applyFilter(initialCategory.toLowerCase(), false);
+    }
+  }
+
+  setupPortfolioFilters();
+  document.addEventListener("astro:page-load", setupPortfolioFilters);
+</script>
+
+<style>
+  .portfolio-filters {
+    margin-bottom: 3.5rem;
+  }
+
+  .filters-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .filter-btn {
+    appearance: none;
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0.6rem 1.35rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) ease,
+      color var(--duration-fast) ease,
+      border-color var(--duration-fast) ease,
+      transform var(--duration-fast) ease;
+  }
+
+  .filter-btn:hover {
+    color: var(--color-text);
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .filter-btn.is-active {
+    background: var(--color-ink);
+    color: var(--color-gold-light);
+    border-color: var(--color-ink);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(16, 20, 17, 0.15);
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+import type { Project } from "../../types";
+
+interface Props {
+  project: Project;
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+---
+
+<a
+  class:list={[
+    "project-card",
+    "interactive-card",
+    { "project-card--offset": index % 2 === 1 },
+  ]}
+  href={`/portfolio/${project.slug}/`}
+  data-project-category={project.category}
+  data-reveal="up"
+>
+  <div class="project-image interactive-image-wrap">
+    <img
+      src={project.cover}
+      alt={`${project.title} — ${project.category} photography`}
+      loading="lazy"
+      width="900"
+      height="1125"
+    />
+    <span class="project-category-badge">{project.category}</span>
+    <span class="project-arrow" aria-hidden="true">↗</span>
+  </div>
+
+  <div class="project-info">
+    <div class="project-title-group">
+      <h3 class="project-title">{project.title}</h3>
+      <p class="project-meta">{project.category} · {project.year}</p>
+    </div>
+    <span class="project-location">{project.location}</span>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    transition:
+      opacity 250ms ease,
+      transform 450ms var(--ease-out);
+  }
+
+  .project-card--offset {
+    margin-top: clamp(0rem, 6vw, 4.5rem);
+  }
+
+  .project-image {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    background: var(--color-ink);
+    overflow: hidden;
+  }
+
+  .project-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-category-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(16, 20, 17, 0.7);
+    backdrop-filter: blur(8px);
+    color: var(--color-gold-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .project-arrow {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(16, 20, 17, 0.75);
+    backdrop-filter: blur(8px);
+    color: var(--color-white);
+    font-size: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition:
+      background var(--duration-fast) ease,
+      transform var(--duration-fast) ease;
+  }
+
+  .project-card:hover .project-arrow {
+    background: var(--color-gold);
+    color: var(--color-ink);
+    transform: translate(3px, -3px);
+  }
+
+  .project-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-inline: 0.25rem;
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+    line-height: 1.25;
+    transition: color 200ms ease;
+  }
+
+  .project-card:hover .project-title {
+    color: var(--color-gold);
+  }
+
+  .project-meta {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .project-location {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .project-card--offset {
+      margin-top: 0;
+    }
+  }
+</style>

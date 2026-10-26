@@ -1,0 +1,276 @@
+---
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import type { Service } from "../../types";
+
+interface Props {
+  service: Service;
+  index: number;
+}
+
+const { service, index } = Astro.props;
+const isReversed = index % 2 === 1;
+---
+
+<article
+  class:list={["service-detail-card", { "service-detail-card--reversed": isReversed }]}
+  id={service.id}
+  data-reveal="up"
+>
+  <div class="service-media interactive-image-wrap">
+    <img
+      src={service.image}
+      alt={`${service.title} photography showcase`}
+      loading="lazy"
+      width="900"
+      height="1050"
+    />
+    <div class="media-overlay">
+      <span class="media-category">{service.category}</span>
+      <span class="media-turnaround">
+        <Icon name="clock" size={14} /> Turnaround: {service.turnaround}
+      </span>
+    </div>
+  </div>
+
+  <div class="service-content">
+    <div class="service-meta-top">
+      <span class="service-num">{service.number}</span>
+      <span class="service-price">Starting from {service.startingPrice}</span>
+    </div>
+
+    <h2 class="service-title">{service.title}</h2>
+    <p class="service-tagline">{service.tagline}</p>
+    <p class="service-desc">{service.description}</p>
+
+    <div class="service-specs">
+      <div class="specs-column">
+        <h4>What's Included</h4>
+        <ul>
+          {service.features.map((feat) => (
+            <li>
+              <Icon name="check" size={16} class="check-icon" />
+              <span>{feat}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="specs-column">
+        <h4>Final Deliverables</h4>
+        <ul>
+          {service.deliverables.map((deliv) => (
+            <li>
+              <Icon name="star" size={14} class="star-icon" />
+              <span>{deliv}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-action-row">
+      <Button href={`/booking/?service=${service.id}`} variant="gold">
+        <span>Book this service</span>
+      </Button>
+      <a
+        class="text-link"
+        href={`/portfolio/?category=${service.id === "portraits" ? "portraits" : service.id === "weddings" ? "weddings" : service.id === "fashion" ? "fashion" : service.id === "commercial" ? "commercial" : "events"}`}
+      >
+        <span>View related projects</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .service-detail-card {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: clamp(2.5rem, 5vw, 5.5rem);
+    align-items: center;
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .service-detail-card:last-child {
+    border-bottom: none;
+  }
+
+  .service-detail-card--reversed {
+    grid-template-columns: 1.25fr 1fr;
+  }
+
+  .service-detail-card--reversed .service-media {
+    order: 2;
+  }
+
+  .service-detail-card--reversed .service-content {
+    order: 1;
+  }
+
+  .service-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-ink);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .service-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(16, 20, 17, 0.85) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-white);
+  }
+
+  .media-category {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+  }
+
+  .media-turnaround {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .service-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-gold);
+  }
+
+  .service-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text);
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 0.5rem;
+  }
+
+  .service-tagline {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  .service-desc {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .service-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+    padding: 1.75rem;
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 2.25rem;
+  }
+
+  .specs-column h4 {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 600;
+    margin: 0 0 0.85rem;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.4rem;
+  }
+
+  .specs-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .specs-column li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  .check-icon,
+  .star-icon {
+    color: var(--color-gold);
+    margin-top: 0.15rem;
+  }
+
+  .service-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .service-detail-card,
+    .service-detail-card--reversed {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .service-detail-card--reversed .service-media {
+      order: 1;
+    }
+
+    .service-detail-card--reversed .service-content {
+      order: 2;
+    }
+
+    .service-specs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

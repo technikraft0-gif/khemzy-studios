@@ -1,0 +1,211 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import Button from "../ui/Button.astro";
+import { getFeaturedProjects } from "../../data/portfolio";
+
+const featured = getFeaturedProjects();
+---
+
+<section class="section featured-section" id="featured-work">
+  <div class="container">
+    <div class="featured-heading">
+      <SectionHeading
+        eyebrow="A selection of our work"
+        title="Moments. People. <em>Stories.</em>"
+        description="Every photograph begins with an authentic human feeling. Explore a curated selection of our favorite commissions across weddings, portraits, fashion, and brands."
+      />
+      <a class="section-link" href="/portfolio/">
+        <span>View full archive</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="portfolio-grid" data-reveal-stagger>
+      {featured.map((project) => (
+        <a class="portfolio-card interactive-card" href={`/portfolio/${project.slug}/`}>
+          <div class="portfolio-image-wrap interactive-image-wrap">
+            <img
+              src={project.cover}
+              alt={`${project.title} — ${project.category} photography`}
+              loading="lazy"
+              width="850"
+              height="1100"
+            />
+            <span class="portfolio-card-shade"></span>
+            <span class="portfolio-card-badge">{project.category}</span>
+          </div>
+
+          <div class="portfolio-card-content">
+            <div class="portfolio-card-meta">
+              <span>{project.location}</span>
+              <span>·</span>
+              <span>{project.year}</span>
+            </div>
+            <h3 class="portfolio-card-title">{project.title}</h3>
+            <p class="portfolio-card-excerpt">{project.excerpt}</p>
+            <span class="portfolio-card-link">
+              Explore story <span aria-hidden="true">↗</span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="featured-mobile-link">
+      <Button href="/portfolio/" variant="outline" size="large">
+        Explore full portfolio
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .featured-section {
+    background: var(--color-paper);
+  }
+
+  .featured-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 200ms ease, transform 200ms ease;
+  }
+
+  .section-link:hover {
+    color: var(--color-gold);
+    transform: translateX(3px);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3.5rem) 2rem;
+  }
+
+  .portfolio-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+  }
+
+  .portfolio-image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    background: var(--color-ink);
+  }
+
+  .portfolio-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .portfolio-card-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 20, 17, 0) 60%,
+      rgba(16, 20, 17, 0.45) 100%
+    );
+  }
+
+  .portfolio-card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(16, 20, 17, 0.75);
+    backdrop-filter: blur(8px);
+    color: var(--color-gold-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .portfolio-card-content {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .portfolio-card-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio-card-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 0.75rem;
+    color: var(--color-text);
+    transition: color 200ms ease;
+  }
+
+  .portfolio-card:hover .portfolio-card-title {
+    color: var(--color-gold);
+  }
+
+  .portfolio-card-excerpt {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 1.25rem;
+    flex-grow: 1;
+  }
+
+  .portfolio-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .featured-mobile-link {
+    display: none;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  @media (max-width: 850px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-mobile-link {
+      display: block;
+    }
+  }
+</style>

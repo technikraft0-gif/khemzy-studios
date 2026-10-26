@@ -1,0 +1,495 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
+import BookingCTA from "../components/home/BookingCTA.astro";
+import { portraitPackages, weddingPackages } from "../data/pricing";
+import { studioFaqs } from "../data/faqs";
+
+const aLaCarteAddons = [
+  {
+    name: "Luxury Handcrafted Linen Album",
+    price: "₦220,000",
+    description: "12x12 Custom embossed Italian leather or linen fine art book with 40 archival spreads.",
+  },
+  {
+    name: "Master Hair & Makeup Artist (HMUA)",
+    price: "₦85,000",
+    description: "Full on-set styling, skin prep, and touchups throughout your portrait session.",
+  },
+  {
+    name: "Associate / Second Lead Photographer",
+    price: "₦180,000",
+    description: "Additional continuous angle coverage for weddings, galas, and complex multi-set shoots.",
+  },
+  {
+    name: "Drone Aerial Stills & 4K B-Roll",
+    price: "₦150,000",
+    description: "FAA & NCAA compliant licensed aerial perspectives for coastal and outdoor venues.",
+  },
+  {
+    name: "Express 48-Hour Full Delivery",
+    price: "₦120,000",
+    description: "Priority queue processing for urgent PR announcements, press launches, and campaigns.",
+  },
+];
+---
+
+<BaseLayout
+  title="Investment & Photography Packages | Khemzy Studios"
+  description="Transparent investment tiers for executive portraits, editorial fashion campaigns, and luxury weddings at Khemzy Studios."
+>
+  <header class="pricing-hero section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="INVESTMENT GUIDE"
+        title="Predictable pricing. <em>Exceptional artistry.</em>"
+        description="Every package includes transparent deliverable counts, high-resolution usage rights, and our signature color grading. Explore our portrait sessions and wedding collections below."
+      />
+    </div>
+  </header>
+
+  <section class="section portrait-pricing-section">
+    <div class="container">
+      <div class="category-header" data-reveal="fade">
+        <span class="eyebrow">STUDIO & EDITORIAL</span>
+        <h2>Portraits & Personal Branding</h2>
+      </div>
+
+      <div class="pricing-cards-grid" data-reveal-stagger>
+        {portraitPackages.map((pkg) => (
+          <div
+            class:list={[
+              "pricing-package-card",
+              "interactive-card",
+              { "pricing-package-card--featured": pkg.popular },
+            ]}
+          >
+            {pkg.badge && <span class="badge-tag">{pkg.badge}</span>}
+
+            <div class="card-head">
+              <h3>{pkg.name}</h3>
+              <p class="ideal-text">{pkg.idealFor}</p>
+              <div class="price-display">
+                <span class="currency">{pkg.currency}</span>
+                <span class="val">{pkg.price}</span>
+              </div>
+              <span class="turnaround-pill">
+                <Icon name="clock" size={14} /> Turnaround: {pkg.turnaround}
+              </span>
+            </div>
+
+            <ul class="features-list">
+              {pkg.features.map((item) => (
+                <li>
+                  <Icon name="check" size={16} class="check-icon" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Button
+              href={pkg.ctaHref}
+              variant={pkg.popular ? "gold" : "outline"}
+              class="card-btn"
+            >
+              {pkg.ctaText}
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section wedding-pricing-section">
+    <div class="container">
+      <div class="category-header category-header--light" data-reveal="fade">
+        <span class="eyebrow eyebrow--light">UNIONS & CELEBRATIONS</span>
+        <h2>Wedding & Destination Collections</h2>
+      </div>
+
+      <div class="pricing-cards-grid" data-reveal-stagger>
+        {weddingPackages.map((pkg) => (
+          <div
+            class:list={[
+              "pricing-package-card",
+              "pricing-package-card--dark",
+              "interactive-card",
+              { "pricing-package-card--featured-dark": pkg.popular },
+            ]}
+          >
+            {pkg.badge && <span class="badge-tag badge-tag--gold">{pkg.badge}</span>}
+
+            <div class="card-head">
+              <h3>{pkg.name}</h3>
+              <p class="ideal-text">{pkg.idealFor}</p>
+              <div class="price-display">
+                <span class="currency">{pkg.currency}</span>
+                <span class="val">{pkg.price}</span>
+              </div>
+              <span class="turnaround-pill turnaround-pill--gold">
+                <Icon name="clock" size={14} /> Turnaround: {pkg.turnaround}
+              </span>
+            </div>
+
+            <ul class="features-list">
+              {pkg.features.map((item) => (
+                <li>
+                  <Icon name="check" size={16} class="check-icon" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Button
+              href={pkg.ctaHref}
+              variant={pkg.popular ? "gold" : "dark"}
+              class="card-btn"
+            >
+              {pkg.ctaText}
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section addons-section">
+    <div class="container">
+      <div class="category-header" data-reveal="up">
+        <span class="eyebrow">ENHANCE YOUR COMMISSION</span>
+        <h2>Curated Add-Ons & Upgrades</h2>
+      </div>
+
+      <div class="addons-grid" data-reveal-stagger>
+        {aLaCarteAddons.map((addon) => (
+          <div class="addon-card interactive-card">
+            <div class="addon-top">
+              <h4>{addon.name}</h4>
+              <span class="addon-price">{addon.price}</span>
+            </div>
+            <p>{addon.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section faqs-section">
+    <div class="container faq-container">
+      <div class="faq-header" data-reveal="up">
+        <span class="eyebrow">INVESTMENT QUESTIONS</span>
+        <h2>Financial terms & retainers.</h2>
+      </div>
+
+      <div class="faq-list" data-reveal-stagger>
+        {studioFaqs.slice(0, 4).map((faq, index) => (
+          <div class:list={["faq-item", { "is-open": index === 0 }]}>
+            <button
+              class="faq-trigger"
+              type="button"
+              aria-expanded={index === 0 ? "true" : "false"}
+            >
+              <span class="faq-question">{faq.question}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                <p>{faq.answer}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <BookingCTA
+    eyebrow="READY TO SECURE YOUR DATE?"
+    title="Let's build your <em>bespoke proposal.</em>"
+    description="Custom assignments with specific styling or international location requirements can be quoted individually upon request."
+  />
+</BaseLayout>
+
+<style>
+  .pricing-hero {
+    padding-top: clamp(4.5rem, 9vw, 8rem);
+    background: var(--color-paper);
+  }
+
+  .portrait-pricing-section {
+    background: var(--color-paper);
+  }
+
+  .wedding-pricing-section {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  .category-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .category-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0.5rem 0 0;
+  }
+
+  .category-header--light h2 {
+    color: var(--color-white);
+  }
+
+  .pricing-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 2.5vw, 2.25rem);
+    align-items: stretch;
+  }
+
+  .pricing-package-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 3vw, 2.5rem);
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .pricing-package-card--featured {
+    background: #ffffff;
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-hover);
+    transform: scale(1.02);
+  }
+
+  .pricing-package-card--dark {
+    background: var(--color-ink-soft);
+    border-color: var(--color-border-dark);
+    color: var(--color-white);
+  }
+
+  .pricing-package-card--featured-dark {
+    border-color: var(--color-gold);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    transform: scale(1.02);
+  }
+
+  .badge-tag {
+    position: absolute;
+    top: -0.75rem;
+    right: 1.5rem;
+    background: var(--color-ink);
+    color: var(--color-gold-light);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-gold);
+  }
+
+  .badge-tag--gold {
+    background: var(--color-gold);
+    color: var(--color-ink);
+    border: none;
+  }
+
+  .card-head h3 {
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .ideal-text {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin: 0 0 1.25rem;
+  }
+
+  .pricing-package-card--dark .ideal-text {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-display .currency {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-gold);
+  }
+
+  .price-display .val {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .turnaround-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin-bottom: 1.75rem;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex-grow: 1;
+  }
+
+  .features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .check-icon {
+    color: var(--color-gold);
+    margin-top: 0.15rem;
+  }
+
+  :global(.card-btn) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .addons-section {
+    background: var(--color-paper-light);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .addon-card {
+    padding: 1.75rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .addon-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+
+  .addon-top h4 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    margin: 0;
+  }
+
+  .addon-price {
+    font-weight: 700;
+    color: var(--color-gold);
+    font-size: 1.05rem;
+  }
+
+  .addon-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .faqs-section {
+    background: var(--color-paper);
+  }
+
+  .faq-container {
+    max-width: 850px;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0.5rem 0 0;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .faq-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.75rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .faq-icon {
+    font-size: 1.5rem;
+    color: var(--color-gold);
+  }
+
+  .faq-content-inner {
+    padding: 0 1.75rem 1.5rem;
+  }
+
+  .faq-content-inner p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 980px) {
+    .pricing-cards-grid,
+    .addons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-package-card--featured,
+    .pricing-package-card--featured-dark {
+      transform: none;
+    }
+  }
+</style>

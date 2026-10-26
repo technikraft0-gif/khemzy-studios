@@ -1,0 +1,35 @@
+export const siteConfig = {
+  name: "Khemzy Studios",
+  legalName: "Khemzy Studios Ltd",
+  tagline: "Every Moment Deserves to Be Unforgettable",
+  description:
+    "Distinctive portrait, wedding, fashion, and commercial visual storytelling. Based in Lagos, Nigeria and available worldwide for destination assignments.",
+  url: "https://khemzystudios.com",
+  defaultImage: "/images/og-cover.png",
+  locale: "en_NG",
+  city: "Lagos",
+  country: "Nigeria",
+  address: "Plot 14, Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+  phone: "+234 814 000 8899",
+  phoneDisplay: "+234 814 000 8899",
+  whatsapp: "+2348140008899",
+  whatsappUrl:
+    "https://wa.me/2348140008899?text=Hello%20Khemzy%20Studios,%20I%20would%20like%20to%20book%20a%20photography%20session.",
+  email: "hello@khemzystudios.com",
+  bookingEmail: "bookings@khemzystudios.com",
+  openingHours: "Mon – Sat: 9:00 AM – 6:00 PM (By appointment)",
+  socials: [
+    { label: "Instagram", href: "https://instagram.com/khemzystudios", handle: "@khemzystudios" },
+    { label: "Twitter / X", href: "https://x.com/khemzystudios", handle: "@khemzystudios" },
+    { label: "Behance", href: "https://behance.net/khemzystudios", handle: "khemzystudios" },
+    { label: "YouTube", href: "https://youtube.com/@khemzystudios", handle: "Khemzy Studios" },
+  ],
+  navLinks: [
+    { label: "Home", href: "/", key: "home" },
+    { label: "Portfolio", href: "/portfolio/", key: "portfolio" },
+    { label: "Services", href: "/services/", key: "services" },
+    { label: "About", href: "/about/", key: "about" },
+    { label: "Pricing", href: "/pricing/", key: "pricing" },
+    { label: "Contact", href: "/contact/", key: "contact" },
+  ],
+};

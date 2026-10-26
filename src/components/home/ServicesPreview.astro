@@ -1,0 +1,172 @@
+---
+import { servicesData } from "../../data/services";
+---
+
+<section class="section services-section">
+  <div class="container">
+    <div class="services-intro" data-reveal="up">
+      <span class="eyebrow eyebrow--light">WHAT WE DO</span>
+      <h2>More than a photograph.<br /><em>A feeling that stays.</em></h2>
+      <p>
+        We bring creative direction, technical lighting precision, and genuine
+        empathy to every session—from intimate heirloom portraits to full-scale
+        commercial campaigns.
+      </p>
+      <a class="text-link text-link--light" href="/services/">
+        <span>Discover our full services catalog</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="services-grid" data-reveal-stagger>
+      {servicesData.slice(0, 4).map((service) => (
+        <article class="service-card interactive-card">
+          <div class="service-top">
+            <span class="service-number">{service.number}</span>
+            <span class="service-badge">{service.startingPrice}</span>
+          </div>
+          <span class="service-rule"></span>
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-tagline">{service.tagline}</p>
+          <p class="service-desc">{service.description}</p>
+          <a
+            href={`/services/#${service.id}`}
+            class="service-card-link"
+            aria-label={`Explore ${service.title} service details`}
+          >
+            <span>Explore service details</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    color: var(--color-white);
+    background: var(--color-ink);
+  }
+
+  .services-intro {
+    max-width: 680px;
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .services-intro h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    margin: 1rem 0 1.25rem;
+  }
+
+  .services-intro h2 em {
+    color: var(--color-gold);
+    font-style: italic;
+  }
+
+  .services-intro p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 4vw, 2.75rem);
+    background: var(--color-ink-soft);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-lg);
+  }
+
+  .service-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-number {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--color-gold);
+    font-weight: 600;
+  }
+
+  .service-badge {
+    font-size: 0.8rem;
+    color: var(--color-gold-light);
+    background: rgba(199, 167, 108, 0.12);
+    border: 1px solid rgba(199, 167, 108, 0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+  }
+
+  .service-rule {
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--color-gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--color-white);
+  }
+
+  .service-tagline {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-gold-light);
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  .service-desc {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 0 0 1.75rem;
+    flex-grow: 1;
+  }
+
+  .service-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-gold);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 200ms ease, color 200ms ease;
+  }
+
+  .service-card:hover .service-card-link {
+    color: var(--color-white);
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 820px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

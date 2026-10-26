@@ -1,0 +1,414 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import BookingCTA from "../components/home/BookingCTA.astro";
+import Icon from "../components/ui/Icon.astro";
+
+const studioValues = [
+  {
+    title: "Light as Atmosphere",
+    description:
+      "We treat light as a sculpting medium rather than mere illumination. Continuous cinematic sources and soft modifiers carve natural contours and evoke deep emotional gravity.",
+  },
+  {
+    title: "Unforced Authenticity",
+    description:
+      "The most breathtaking portraits emerge when performance falls away. We direct with patience and empathy, allowing genuine warmth and individuality to surface naturally.",
+  },
+  {
+    title: "Artisanal Post-Production",
+    description:
+      "No plastic skin filters or algorithmic presets. We utilize meticulous split-frequency retouching that honors pore texture, authentic melanin tones, and organic fabric textures.",
+  },
+  {
+    title: "Generational Heirlooms",
+    description:
+      "A photograph must endure decades after digital feeds vanish. We curate every gallery to stand as an enduring family heirloom or timeless brand asset.",
+  },
+];
+
+const recognitions = [
+  "BellaNaija Weddings Feature Photographer",
+  "Arise Fashion Week Lead Editorial Coverage",
+  "Lagos Photo Festival Curated Exhibitor",
+  "West Africa Creative Arts Guild Excellence Award",
+];
+---
+
+<BaseLayout
+  title="Our Studio Story & Artistic Philosophy | Khemzy Studios"
+  description="Learn about Khemzy Studios: our creative ethos, founder story, lighting philosophy, and studio space based in Lekki Phase 1, Lagos."
+>
+  <header class="about-hero section">
+    <div class="container">
+      <div class="about-hero-grid">
+        <div class="about-hero-copy">
+          <SectionHeading
+            eyebrow="BEHIND THE LENS"
+            title="We document the poetry <em>of authentic life.</em>"
+            description="Founded on the belief that photography should feel like an heirloom rather than content. We craft visual stories with intention, sculptural light, and emotional reverence."
+          />
+          <div class="hero-quote" data-reveal="up">
+            <p>
+              "A true photograph is not taken; it is received. It requires listening to the room,
+              respecting the person, and honoring the fleeting second before it slips into memory."
+            </p>
+            <cite>— Khemzy, Founder & Creative Director</cite>
+          </div>
+        </div>
+
+        <div class="about-hero-visual interactive-image-wrap" data-reveal="left">
+          <img
+            src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85"
+            alt="Khemzy Studios founder adjusting studio lighting on set"
+            fetchpriority="high"
+            width="1200"
+            height="1400"
+          />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section founder-section">
+    <div class="container founder-grid">
+      <div class="founder-image-col" data-reveal="zoom">
+        <div class="founder-portrait interactive-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=85"
+            alt="Khemzy, Principal Photographer and Creative Director"
+            loading="lazy"
+            width="1000"
+            height="1250"
+          />
+        </div>
+        <div class="founder-card-caption">
+          <strong>KHEMZY</strong>
+          <span>Founder & Principal Photographer</span>
+        </div>
+      </div>
+
+      <div class="founder-bio-col" data-reveal="right">
+        <span class="eyebrow">THE FOUNDER'S JOURNEY</span>
+        <h2>A decade of pursuing <em>unfiltered human grace.</em></h2>
+        <p class="lead-bio">
+          What began over ten years ago with an analog 35mm rangefinder in the vibrant streets of Lagos
+          has matured into an internationally commissioned visual studio trusted by couples, cultural icons,
+          and luxury brands across Africa, the UK, and North America.
+        </p>
+        <p>
+          "I created Khemzy Studios because I noticed modern photography was becoming fast, loud, and disposable.
+          Everyone was applying the same trending filters and rushing through poses. We chose a deliberate path:
+          slow composition, mastery over continuous light, and building a sanctuary where clients feel truly seen."
+        </p>
+        <p>
+          Today, the studio operates from a custom-designed natural light space in Lekki Phase 1, Lagos,
+          supported by a passionate team of retouching artists, lighting technicians, and production managers.
+        </p>
+
+        <div class="founder-credentials">
+          <div class="credential-item">
+            <span class="cred-num">10+</span>
+            <span class="cred-label">Years of Mastery</span>
+          </div>
+          <div class="credential-item">
+            <span class="cred-num">14</span>
+            <span class="cred-label">Countries Photographed</span>
+          </div>
+          <div class="credential-item">
+            <span class="cred-num">100%</span>
+            <span class="cred-label">Artisanal Color Graded</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section values-section">
+    <div class="container">
+      <div class="values-header" data-reveal="up">
+        <span class="eyebrow eyebrow--light">OUR PILLARS</span>
+        <h2>The principles that guide <em>every shutter click.</em></h2>
+      </div>
+
+      <div class="values-grid" data-reveal-stagger>
+        {studioValues.map((val, idx) => (
+          <div class="value-card interactive-card">
+            <span class="value-idx">0{idx + 1}</span>
+            <h3>{val.title}</h3>
+            <p>{val.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section recognition-section">
+    <div class="container recognition-inner" data-reveal="up">
+      <span class="eyebrow">ACCLAIM & EXHIBITIONS</span>
+      <h2>Industry Recognition</h2>
+      <div class="recognition-grid">
+        {recognitions.map((item) => (
+          <div class="recognition-pill">
+            <Icon name="star" size={16} class="star-icon" />
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <BookingCTA
+    eyebrow="BEGIN THE DIALOGUE"
+    title="Ready to meet <em>our studio team?</em>"
+    description="We invite you to visit our studio in Lekki Phase 1 for coffee and a portfolio review, or schedule a virtual discovery consultation."
+  />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-top: clamp(4.5rem, 9vw, 8rem);
+    background: var(--color-paper);
+  }
+
+  .about-hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .hero-quote {
+    margin-top: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--color-paper-light);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .hero-quote p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.7;
+    margin: 0 0 0.75rem;
+  }
+
+  .hero-quote cite {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    font-style: normal;
+  }
+
+  .about-hero-visual {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-ink);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .about-hero-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .founder-section {
+    background: var(--color-paper-light);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  .founder-portrait {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-ink);
+  }
+
+  .founder-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .founder-card-caption {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .founder-card-caption strong {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--color-text);
+    letter-spacing: 0.05em;
+  }
+
+  .founder-bio-col h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.12;
+    margin: 0.75rem 0 1.5rem;
+  }
+
+  .founder-bio-col h2 em {
+    color: var(--color-gold);
+    font-style: italic;
+  }
+
+  .lead-bio {
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .founder-bio-col p {
+    color: var(--color-text-muted);
+    font-size: 0.98rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .founder-credentials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cred-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .cred-label {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.03em;
+    margin-top: 0.25rem;
+  }
+
+  .values-section {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  .values-header {
+    max-width: 650px;
+    margin-bottom: 3.5rem;
+  }
+
+  .values-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin: 0.75rem 0 0;
+  }
+
+  .values-header h2 em {
+    color: var(--color-gold);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .value-card {
+    padding: 2.5rem;
+    background: var(--color-ink-soft);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-lg);
+  }
+
+  .value-idx {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .value-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-white);
+    margin: 0 0 0.75rem;
+  }
+
+  .value-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .recognition-section {
+    background: var(--color-paper);
+    text-align: center;
+  }
+
+  .recognition-inner h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0.5rem 0 2.5rem;
+  }
+
+  .recognition-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .recognition-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    background: var(--color-paper-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+
+  .star-icon {
+    color: var(--color-gold);
+  }
+
+  @media (max-width: 900px) {
+    .about-hero-grid,
+    .founder-grid,
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

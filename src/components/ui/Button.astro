@@ -1,0 +1,51 @@
+
+---
+interface Props {
+  href?: string;
+  variant?: "gold" | "outline" | "dark";
+  size?: "default" | "large";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  variant = "gold",
+  size = "default",
+  type = "button",
+  disabled = false,
+  class: className = "",
+} = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class:list={[
+        "button",
+        `button--${variant}`,
+        { "button--large": size === "large" },
+        className,
+      ]}
+    >
+      <span><slot /></span>
+      <span class="button-arrow" aria-hidden="true">↗</span>
+    </a>
+  ) : (
+    <button
+      type={type}
+      disabled={disabled}
+      class:list={[
+        "button",
+        `button--${variant}`,
+        { "button--large": size === "large" },
+        className,
+      ]}
+    >
+      <span><slot /></span>
+      <span class="button-arrow" aria-hidden="true">↗</span>
+    </button>
+  )
+}
